@@ -5,7 +5,7 @@ import "../App.css";
 const Todo = () => {
 
     const [inputData, setInputData] = useState('');
-    const [items, setItems] = useState([]);
+    const [items, setItems, doing] = useState([]);
 
     const addItem = () =>{
         if(!inputData){
@@ -24,8 +24,17 @@ const Todo = () => {
         });
         setItems(updateditems);
     }
+    // move
+    const Move = () =>{
+       doing = setItems([...items, inputData]);
+    }
+    setItems(doing);
+
+    
+
     // REMO ALL
     const removeAll =() => {
+      
         setItems([]);
     }
 
@@ -55,7 +64,21 @@ const Todo = () => {
     <div class="card">
     <div className="todolist"><h4>TO-DO-LIST</h4></div>
 
-    <button className = "btn"><span>MOVE</span></button>
+    <div className="showItems">
+    {
+    items.map((elem, ind) => {
+        return(
+            <div className="eachItem" key={ind}>
+                <p className="elements"><ul><li><b>{elem}</b> 
+                <i className="fa fa-trash-o" title='Delete Item'
+                    onClick={() => DeleteItem(ind)}></i></li></ul></p>
+                
+            </div>
+            )
+        })
+    }
+</div>
+    <button className = "btn" data-sm-link-text="Sending" ><span>MOVE</span></button>
     </div>
   </div>
 
@@ -63,6 +86,21 @@ const Todo = () => {
     <div class="card">
     <div className="todolist"><h4>DOINGTO-DO-LIST</h4></div>
 
+   
+    <div className="showItems">
+    {
+    doing.map((elem, ind) => {
+        return(
+            <div className="eachItem" key={ind}>
+                <p className="elements"><ul><li><b>{elem}</b> 
+                <i className="fa fa-trash-o" title='Delete Item'
+                    onClick={() => DeleteItem(ind)}></i></li></ul></p>
+                
+            </div>
+            )
+        })
+    }
+</div>
     <button className ="btn"><span>MOVE</span></button>
     </div>
   </div>
@@ -76,29 +114,18 @@ const Todo = () => {
   </div>
   </div>
 
+
         {/* Delete Item */}        
-<div className="showItems">
-    {
-    items.map((elem, ind) => {
-        return(
-            <div className="eachItem" key={ind}>
-                <h3>{elem}</h3>
-                <i className="fa fa-trash-o" title='Delete Item'
-                    onClick={() => DeleteItem(ind)}></i>
-            </div>
-            )
-        })
-    }
-</div>
+
 
 {/* removeAll */}
-<div className="showItems">
-    <button className = "btn effect04" data-sm-link-text="Remove All" onClick={removeAll}>
-        <span>CHECK LIST</span></button>
+<div className="showItem">
+    <button className = "btn" data-sm-link-text="Remove All" onClick={removeAll}>
+        <span>Remove All</span></button>
 </div>
 
 </div>
-
+{/* </div> */}
 </>
   ) 
 }
@@ -109,20 +136,3 @@ export default Todo
 
 // backgroung colour
 //for center 
-
-/* 
-        <div className="container">
-  <div className="w3-panel w3-card"><p>card-1</p></div>
-  <div className="w3-panel w3-card-2" ><p>card-2</p></div>
-  <div className="w3-panel w3-card-4"><p>card-3</p></div>
-</div>              */
-
-
-      /* <div className="boxs" >
-  <div className="card-body">
-    <h5 className="card-title">TO-DO title</h5>
-    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a href="/" className="btn btn-primary">Go somewhere</a>
-    <button className = "btn effect04" >MOVE</button>
-  </div>
-</div> */

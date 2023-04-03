@@ -31,10 +31,16 @@ body {
   margin-left: 80px;  
 }
 .showItems{
-  margin-left: 90px;
-  border-radius: 5px;
-}
+  /* margin-left: 90px; */
+ 
 
+  /* padding: 0px; */
+  /* width: 18%;  */
+}
+.eachItem{
+  /* display: flex; */
+  /* text-align: center; */
+}
 /* Float three columns side by side */
 .column {
   float: left;
@@ -68,6 +74,9 @@ body {
 .btn:hover{
   background-color: blue;
   color: #f1f1f1;
+}
+.showItem{
+  text-align: center;
 }
 
 
