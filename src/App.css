@@ -9,9 +9,6 @@ body {
 .main-div{
   background-color: #a6a7ae;
   height: 100%;
-  /* display: flex;
-  justify-content: center; */
-  /* color: aliceblue; */
 }
 .chil-div{
   /* display: flex; */
@@ -31,11 +28,15 @@ body {
   margin-left: 80px;  
 }
 .showItems{
-  /* margin-left: 90px; */
+  vertical-align: text-top;
+  vertical-align: text-bottom;
  
 
-  /* padding: 0px; */
+  padding: 0px;
   /* width: 18%;  */
+}
+.elements{
+  
 }
 .eachItem{
   /* display: flex; */
@@ -70,6 +71,12 @@ body {
   padding: 10px;
   text-align: center;
   background-color: #f1f1f1;
+}
+.delete{
+ margin-left: 10%;
+}
+.btn{
+  margin-left: 10%;
 }
 .btn:hover{
   background-color: blue;

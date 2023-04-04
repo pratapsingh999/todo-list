@@ -1,20 +1,65 @@
-import React, {useState} from 'react'
-import todo from "../images/todo.png"
+import React, {useState,useEffect} from 'react'
+import logo from "../images/todo.png"
 import "../App.css";
 
 const Todo = () => {
 
+   
     const [inputData, setInputData] = useState('');
-    const [items, setItems, doing] = useState([]);
-
+    const [items, setItems] = useState([{keyname:"PRATAP singh thakur",status:"todo"},{keyname:"AKASH singh",status:"doing"},{keyname:"ADITYA singh",status:"done"}]);
+//     let todo = [{keyname:"pratap singh",status:"todo"}];
+// let doing = [{keyname:"akash singh",status:"doing"}];
+// let done = [{keyname:"aditya singh",status:"done"}];
+// useEffect(() =>{ status()},[items])
     const addItem = () =>{
         if(!inputData){
             
         }else{
-            setItems([...items, inputData]);
+            setItems([...items, {keyname:inputData,status:"todo"}]);
             setInputData('')
         }
     }
+
+// defaultitems
+// const [todo, settodo] = useState([]);
+let todo = [];
+// const [doing, setdoing] = useState([]);
+let doing = [];
+// const [done, setdone] = useState([]);
+let done = [];   
+const status =() => {
+//  console.log("ab")
+   for(var i in items ){
+    switch (items[i].status) {
+      case "todo":
+        // settodo([...todo, items[i]]);
+        todo.push(items[i]);
+       break;
+      case "doing":
+        // setdoing([...doing, items[i]]);
+        doing.push(items[i]);
+        break;
+      case "done":
+        // setdone([...done, items[i]]);
+        done.push(items[i]);
+        break;
+        default :
+    }
+   }
+}
+status();
+
+ 
+
+// const statuss =(id) =>{
+//   console.log(id);
+//   const defaultitems = items.filter((keyname, instatusd) =>{
+//       return 
+//   });
+//   setItems(defaultitems);
+// }
+// statuss()
+
 
     // delete items
     const DeleteItem =(id) =>{
@@ -24,17 +69,19 @@ const Todo = () => {
         });
         setItems(updateditems);
     }
+
     // move
-    const Move = () =>{
-       doing = setItems([...items, inputData]);
-    }
-    setItems(doing);
+    // const MoveItems = () =>{
+    // //    doing = setItems([...items, inputData]);
+    // todo = doing;
+    // }
+    // MoveItems();
 
     
 
     // REMO ALL
     const removeAll =() => {
-      
+
         setItems([]);
     }
 
@@ -43,7 +90,7 @@ const Todo = () => {
 <div className="main-div">     
     <div className="chil-div">    
         <figure >
-            <img className='img' src={todo} alt="todologo" />
+            <img className='img' src={logo} alt="todologo" />
         <figcaption><h1 className="texts">Add your list hear </h1></figcaption>
         </figure>
 
@@ -66,20 +113,36 @@ const Todo = () => {
 
     <div className="showItems">
     {
-    items.map((elem, ind) => {
+    todo.map((elem, ind) => {
         return(
             <div className="eachItem" key={ind}>
-                <p className="elements"><ul><li><b>{elem}</b> 
-                <i className="fa fa-trash-o" title='Delete Item'
-                    onClick={() => DeleteItem(ind)}></i></li></ul></p>
+                <p className="elements"><ul><li><b>{elem.keyname}</b>
+                <i className="fa fa-trash-o delete" title='Delete Item'
+                    onClick={() => DeleteItem(ind)} ></i></li></ul></p>
                 
             </div>
             )
         })
     }
 </div>
-    <button className = "btn" data-sm-link-text="Sending" ><span>MOVE</span></button>
+
+{/* <div className="showItems">
+    {
+    todo.map((elem, ind) => {
+        return(
+            <div className="eachItem" key={ind}>
+                <p className="elements"><ul><li><b>{elem.keyname}</b>
+                <button className = "btn" title='move items' onClick={() => MoveItems(ind)}><span>MOVE</span></button>
+               </li></ul></p>
+                
+            </div>
+            )
+        })
+    }
+    </div> */}
+    
     </div>
+    {/* <button className = "btn" title='move items' onClick={(addItem) => MoveItems()}><span>MOVE</span></button> */}
   </div>
 
   <div class="column">
@@ -92,23 +155,37 @@ const Todo = () => {
     doing.map((elem, ind) => {
         return(
             <div className="eachItem" key={ind}>
-                <p className="elements"><ul><li><b>{elem}</b> 
-                <i className="fa fa-trash-o" title='Delete Item'
-                    onClick={() => DeleteItem(ind)}></i></li></ul></p>
+                <p className="elements"><ul><li><b>{elem.keyname}</b> <button className = "btn"><span>MOVE</span></button>
+                <i className="fa fa-trash-o delete" title='Delete Item'
+                    onClick={() => DeleteItem(ind)} ></i></li></ul></p>
                 
             </div>
             )
         })
     }
 </div>
-    <button className ="btn"><span>MOVE</span></button>
     </div>
   </div>
   
   <div class="column">
     <div class="card">
     <div className="todolist"><h4>DONE TO-DO-LIST</h4></div>
-    <button className = "btn"><span>DONE</span></button>
+    
+    <div className="showItems">
+    {
+    done.map((elem, ind) => {
+        return(
+            <div className="eachItem" key={ind}>
+                <p className="elements"><ul><li><b>{elem.keyname}</b> <button className = "btn"><span>MOVE</span></button>
+                <i className="fa fa-trash-o delete" title='Delete Item'
+                    onClick={() => DeleteItem(ind)} ></i></li></ul></p>
+                
+            </div>
+            )
+        })
+    }
+</div>
+    
     </div>
   </div>
   </div>
@@ -136,3 +213,5 @@ export default Todo
 
 // backgroung colour
 //for center 
+// {keyname:"akash singh",status:"doing"},{keyname:"AADITYA singh",status:"done"}
+// {elem.keyname}
