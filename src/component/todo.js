@@ -6,11 +6,14 @@ const Todo = () => {
 
    
     const [inputData, setInputData] = useState('');
-    const [items, setItems] = useState([{keyname:"PRATAP singh thakur",status:"todo"},{keyname:"AKASH singh",status:"doing"},{keyname:"ADITYA singh",status:"done"}]);
-//     let todo = [{keyname:"pratap singh",status:"todo"}];
+    const [items, setItems] = useState([{keyname:"PRATAP singh thakur",status:"todo"},
+          {keyname:"AKASH singh",status:"doing"},{keyname:"ADITYA singh",status:"done"}]);
+
+// let todo = [{keyname:"pratap singh",status:"todo"}];
 // let doing = [{keyname:"akash singh",status:"doing"}];
 // let done = [{keyname:"aditya singh",status:"done"}];
-// useEffect(() =>{ status()},[items])
+
+useEffect(() =>{ status()},[items])
     const addItem = () =>{
         if(!inputData){
             
@@ -21,45 +24,34 @@ const Todo = () => {
     }
 
 // defaultitems
-// const [todo, settodo] = useState([]);
-let todo = [];
-// const [doing, setdoing] = useState([]);
-let doing = [];
-// const [done, setdone] = useState([]);
-let done = [];   
+
+const [todo, settodo] = useState([]);
+// let todo = [];
+const [doing, setdoing] = useState([]);
+// let doing = [];
+const [done, setdone] = useState([]);
+// let done = [];   
 const status =() => {
 //  console.log("ab")
    for(var i in items ){
     switch (items[i].status) {
       case "todo":
-        // settodo([...todo, items[i]]);
-        todo.push(items[i]);
+        settodo([...todo, items[i]]);
+        // todo.push(items[i]);
        break;
       case "doing":
-        // setdoing([...doing, items[i]]);
-        doing.push(items[i]);
+        setdoing([...doing, items[i]]);
+        // doing.push(items[i]);
         break;
       case "done":
-        // setdone([...done, items[i]]);
-        done.push(items[i]);
+        setdone([...done, items[i]]);
+        // done.push(items[i]);
         break;
         default :
     }
    }
+   setItems([]);
 }
-status();
-
- 
-
-// const statuss =(id) =>{
-//   console.log(id);
-//   const defaultitems = items.filter((keyname, instatusd) =>{
-//       return 
-//   });
-//   setItems(defaultitems);
-// }
-// statuss()
-
 
     // delete items
     const DeleteItem =(id) =>{
@@ -70,14 +62,43 @@ status();
         setItems(updateditems);
     }
 
-    // move
-    // const MoveItems = () =>{
-    // //    doing = setItems([...items, inputData]);
-    // todo = doing;
-    // }
-    // MoveItems();
 
-    
+// move to doing
+const MoveItems =(statusOfItem,id) => {
+    switch (statusOfItem) {
+        case "doing":
+            const todolist = todo.filter((elem, ind) =>{
+                return ind !== id;
+            });
+            settodo(todolist);
+         
+       setdoing([...doing, todo[id]]);
+       break;
+          default :
+      }
+}
+
+
+// move to done
+const MoveToDone =(statusOfItems,id) => {
+    switch (statusOfItems) {
+        case "done":
+            const doingitems = doing.filter((elem, ind) =>{
+                return ind !== id;
+            });
+            setdoing(doingitems);
+         
+    //    setdoing([...doing, todo[id]]);
+       setdone([...done, doing[id]]);
+       break;
+          default :
+      }
+}
+    // DoneItemes
+    const DoneItemes =() => {
+        setItems([]);
+    }
+   
 
     // REMO ALL
     const removeAll =() => {
@@ -111,19 +132,19 @@ status();
     <div class="card">
     <div className="todolist"><h4>TO-DO-LIST</h4></div>
 
-    <div className="showItems">
-    {
-    todo.map((elem, ind) => {
-        return(
-            <div className="eachItem" key={ind}>
-                <p className="elements"><ul><li><b>{elem.keyname}</b>
-                <i className="fa fa-trash-o delete" title='Delete Item'
-                    onClick={() => DeleteItem(ind)} ></i></li></ul></p>
-                
-            </div>
-            )
-        })
-    }
+<div className="showItems">
+{
+todo.map((elem, ind) => {
+    return(
+        <div className="eachItem" key={ind}>
+            <p className="elements"><ul><li><b>{elem.keyname}</b>
+            <i className="fa fa-trash-o delete" title='Delete Item'
+            onClick={() => DeleteItem(ind)} > <button className = "btn" 
+            title='move items'  onClick={() => MoveItems("doing", ind)}><span>MOVE</span></button></i></li></ul></p>
+        </div>
+        )
+    })
+}
 </div>
 
 {/* <div className="showItems">
@@ -142,7 +163,7 @@ status();
     </div> */}
     
     </div>
-    {/* <button className = "btn" title='move items' onClick={(addItem) => MoveItems()}><span>MOVE</span></button> */}
+   
   </div>
 
   <div class="column">
@@ -155,7 +176,7 @@ status();
     doing.map((elem, ind) => {
         return(
             <div className="eachItem" key={ind}>
-                <p className="elements"><ul><li><b>{elem.keyname}</b> <button className = "btn"><span>MOVE</span></button>
+                <p className="elements"><ul><li><b>{elem.keyname}</b> <button className = "btn" title='move items'  onClick={() => MoveToDone("done", ind)}><span>MOVE</span></button>
                 <i className="fa fa-trash-o delete" title='Delete Item'
                     onClick={() => DeleteItem(ind)} ></i></li></ul></p>
                 
@@ -176,7 +197,7 @@ status();
     done.map((elem, ind) => {
         return(
             <div className="eachItem" key={ind}>
-                <p className="elements"><ul><li><b>{elem.keyname}</b> <button className = "btn"><span>MOVE</span></button>
+                <p className="elements"><ul><li><b>{elem.keyname}</b> <button className = "btn"  title='move items'  onClick={DoneItemes}><span>DONE</span></button>
                 <i className="fa fa-trash-o delete" title='Delete Item'
                     onClick={() => DeleteItem(ind)} ></i></li></ul></p>
                 
